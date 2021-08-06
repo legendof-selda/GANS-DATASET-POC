@@ -1261,6 +1261,13 @@ def load_image_gt(dataset, config, image_id, augment=False, augmentation=None,
     # Note that some boxes might be all zeros if the corresponding mask got cropped out.
     # and here is to filter them out
     _idx = np.sum(mask, axis=(0, 1)) > 0
+    _idx_ = np.ones(len(class_ids)).astype(np.bool) # To match the input class id array with the expected boolean array
+    mask = mask[:, :, _idx]
+    class_ids = class_ids[_idx_]
+    # Bounding boxes. Note that some boxes might be all zeros
+    # if the corresponding mask got cropped out.
+    # bbox: [num_instances, (y1, x1, y2, x2)]
+    bbox = utils.extract_bboxes(mask)
     mask = mask[:, :, _idx]
     class_ids = class_ids[_idx]
     # Bounding boxes. Note that some boxes might be all zeros
@@ -2196,7 +2203,7 @@ class MaskRCNN():
             loss = (
                 tf.reduce_mean(layer.output, keepdims=True)
                 * self.config.LOSS_WEIGHTS.get(name, 1.))
-            self.keras_model.metrics_tensors.append(loss)
+            self.keras_model.add_metric(loss, name)
 
     def set_trainable(self, layer_regex, keras_model=None, indent=0, verbose=1):
         """Sets model layers as trainable if their names match

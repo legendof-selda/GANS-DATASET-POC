@@ -149,7 +149,18 @@ def display_instances(image, boxes, masks, class_ids, class_names,
         # Mask
         mask = masks[:, :, i]
         if show_mask:
-            masked_image = apply_mask(masked_image, mask, color)
+            if class_id == 1: 
+                masked_image = apply_mask(masked_image, mask, [1, 0, 0], alpha=1)
+            elif class_id == 2:
+                masked_image = apply_mask(masked_image, mask, [0, 1, 0], alpha=1)
+            elif class_id == 3:
+                masked_image = apply_mask(masked_image, mask, [0, 0, 1], alpha=1)
+            elif class_id == 4:
+                masked_image = apply_mask(masked_image, mask, [1, 0, 1], alpha=1)
+            elif class_id == 5:
+                masked_image = apply_mask(masked_image, mask, [0, 1, 1], alpha=1)
+            elif class_id == 6:
+                masked_image = apply_mask(masked_image, mask, [1, 1, 0], alpha=1)
 
         # Mask Polygon
         # Pad to ensure proper polygons for masks that touch image edges.
