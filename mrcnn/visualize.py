@@ -12,6 +12,8 @@ import sys
 import random
 import itertools
 import colorsys
+import matplotlib
+matplotlib.use('Agg')
 
 import numpy as np
 from skimage.measure import find_contours
@@ -174,6 +176,11 @@ def display_instances(image, boxes, masks, class_ids, class_names,
             p = Polygon(verts, facecolor="none", edgecolor=color)
             ax.add_patch(p)
     ax.imshow(masked_image.astype(np.uint8))
+    # img1 = Image.fromarray(masked_image.astype(np.uint8), 'RGB')
+    print("Image saved")
+    plt.savefig('/content/drive/MyDrive/Segmentation/GANS-DATASET-POC/results/image.jpg')
+    # img1.save('/content/drive/MyDrive/Segmentation/GANS-DATASET-POC/results/image.jpg')
+    # img1.show()
     if auto_show:
         plt.show()
 

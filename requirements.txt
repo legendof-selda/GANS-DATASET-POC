@@ -1,4 +1,5 @@
-numpy
+﻿Numpy
+dvc
 scipy
 Pillow
 cython
