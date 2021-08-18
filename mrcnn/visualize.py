@@ -166,7 +166,7 @@ def save_image(image, image_name, boxes, masks, class_ids, scores, class_names, 
     masked_image = Image.fromarray(masked_image)
 
     if mode == 3:
-        masked_image.save("/content/drive/MyDrive/Segmentation/GANS-DATASET-POC/results/image.jpg")
+        masked_image.save(save_dir+"/seg_"+image_name)
         return
 
     draw = ImageDraw.Draw(masked_image)
